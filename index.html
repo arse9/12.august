@@ -23,7 +23,7 @@
 </head>
 <body>
     <div id="countdown"></div>
-    <audio id="tick-sound" src="ticking.mp3"></audio> <!-- Added audio element for ticking sound -->
+    <audio id="tick-sound" src="ticking.mp3"></audio> <!-- Audio element for ticking sound -->
 
     <script>
         // Set the date we're counting down to
@@ -32,10 +32,15 @@
         // Get the audio element
         var tickSound = document.getElementById("tick-sound");
 
+        // Ensure the audio file is loaded
+        tickSound.load();
+
         // Update the count down every 1 second
         var x = setInterval(function() {
-            // Play the ticking sound
-            tickSound.play();
+            // Play the ticking sound, handling any playback errors
+            tickSound.play().catch(function(error) {
+                console.error("Audio playback failed:", error);
+            });
             
             // Get today's date and time
             var now = new Date().getTime();
