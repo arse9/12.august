@@ -14,6 +14,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            flex-direction: column;
         }
         #countdown {
             font-weight: bold;
@@ -28,6 +29,7 @@
     <div id="countdown"></div>
     <button id="start-button">Start Countdown</button>
     <audio id="tick-sound" src="Ticking.mp3"></audio> <!-- Audio element for ticking sound -->
+    <iframe id="spotify-player" src="https://open.spotify.com/embed/track/21Yvi82imnN9ZQ87FxMpU9" width="100%" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
 
     <script>
         // Set the date we're counting down to
@@ -70,6 +72,19 @@
                     document.getElementById("countdown").innerHTML = ":(";
                 }
             }, 1000);
+
+            // Start the Spotify loop
+            loopSpotifyTrack();
+        }
+
+        // Function to reload the iframe to loop the Spotify track
+        function loopSpotifyTrack() {
+            var iframe = document.getElementById("spotify-player");
+            setInterval(function() {
+                var src = iframe.src;
+                iframe.src = ''; // Clear the source
+                iframe.src = src; // Reset the source to restart the track
+            }, 180000); // Adjust this interval based on the track length (3 minutes = 180000 ms)
         }
 
         // Wait for user interaction to start the countdown
