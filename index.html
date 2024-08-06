@@ -15,16 +15,27 @@
             height: 100vh;
             margin: 0;
             flex-direction: column;
+            position: relative; /* Allow positioning of child elements */
         }
         #countdown {
             font-weight: bold;
             font-size: 5em; /* Increased size */
         }
+        #spotify-player {
+            position: absolute; /* Position it in the bottom right corner */
+            bottom: 20px; /* Space from the bottom */
+            right: 20px; /* Space from the right */
+            border-radius: 12px;
+            width: 250px; /* Set a fixed width for the iframe */
+            height: 152px; /* Set a fixed height for the iframe */
+            border: none; /* Remove the border */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Optional shadow for better visibility */
+        }
     </style>
 </head>
 <body>
     <div id="countdown"></div>
-    <iframe id="spotify-player" style="border-radius:12px" src="https://open.spotify.com/embed/track/6XHNIbru8xGohLzHNgxQvF?utm_source=generator&theme=0" width="250" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <iframe id="spotify-player" src="https://open.spotify.com/embed/track/6XHNIbru8xGohLzHNgxQvF?utm_source=generator&theme=0&autoplay=1" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
     <script>
         // Set the date we're counting down to
@@ -54,6 +65,19 @@
                 document.getElementById("countdown").innerHTML = ":(";
             }
         }, 1000);
+
+        // Function to loop the Spotify track
+        function loopSpotifyTrack() {
+            var iframe = document.getElementById("spotify-player");
+            setInterval(function() {
+                var src = iframe.src;
+                iframe.src = ''; // Clear the source
+                iframe.src = src; // Reset the source to restart the track
+            }, 180000); // Adjust this interval based on the track length (3 minutes = 180000 ms)
+        }
+
+        // Start the loop for the Spotify track
+        loopSpotifyTrack();
     </script>
 </body>
 </html>
