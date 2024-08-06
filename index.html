@@ -20,81 +20,40 @@
             font-weight: bold;
             font-size: 5em; /* Increased size */
         }
-        #start-button {
-            display: none;
-        }
     </style>
 </head>
 <body>
     <div id="countdown"></div>
-    <button id="start-button">Start Countdown</button>
-    <audio id="tick-sound" src="Ticking.mp3"></audio> <!-- Audio element for ticking sound -->
-    <iframe id="spotify-player" src="https://open.spotify.com/embed/track/21Yvi82imnN9ZQ87FxMpU9" width="100%" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+    <iframe id="spotify-player" style="border-radius:12px" src="https://open.spotify.com/embed/track/6XHNIbru8xGohLzHNgxQvF?utm_source=generator&theme=0" width="250" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
     <script>
         // Set the date we're counting down to
         var countDownDate = new Date("Aug 12, 2024 09:00:00").getTime();
 
-        // Get the audio element
-        var tickSound = document.getElementById("tick-sound");
-
-        // Function to start the countdown
-        function startCountdown() {
-            // Ensure the audio file is loaded
-            tickSound.load();
-
-            // Update the count down every 1 second
-            var x = setInterval(function() {
-                // Play the ticking sound, handling any playback errors
-                tickSound.play().catch(function(error) {
-                    console.error("Audio playback failed:", error);
-                });
-                
-                // Get today's date and time
-                var now = new Date().getTime();
-                
-                // Find the distance between now and the count down date
-                var distance = countDownDate - now;
-                
-                // Time calculations for days, hours, minutes and seconds
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                
-                // Display the result in the element with id="countdown"
-                document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
-                + minutes + "m " + seconds + "s ";
-                
-                // If the count down is over, write some text 
-                if (distance < 0) {
-                    clearInterval(x);
-                    document.getElementById("countdown").innerHTML = ":(";
-                }
-            }, 1000);
-
-            // Start the Spotify loop
-            loopSpotifyTrack();
-        }
-
-        // Function to reload the iframe to loop the Spotify track
-        function loopSpotifyTrack() {
-            var iframe = document.getElementById("spotify-player");
-            setInterval(function() {
-                var src = iframe.src;
-                iframe.src = ''; // Clear the source
-                iframe.src = src; // Reset the source to restart the track
-            }, 180000); // Adjust this interval based on the track length (3 minutes = 180000 ms)
-        }
-
-        // Wait for user interaction to start the countdown
-        document.body.addEventListener("click", function() {
-            document.getElementById("start-button").style.display = "none";
-            startCountdown();
-        });
-
-        // Display start button to prompt user interaction
-        document.getElementById("start-button").style.display = "block";
+        // Update the count down every 1 second
+        var x = setInterval(function() {
+            // Get today's date and time
+            var now = new Date().getTime();
+            
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
+            
+            // Time calculations for days, hours, minutes and seconds
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            // Display the result in the element with id="countdown"
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+            
+            // If the count down is over, write some text 
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown").innerHTML = ":(";
+            }
+        }, 1000);
     </script>
 </body>
 </html>
